@@ -68,6 +68,9 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(dialogContentVariants({ variant }), className)}
+        style={{
+          translate: '-50% -50%',
+        }}
         {...props}
       >
         {children}
