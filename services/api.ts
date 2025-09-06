@@ -22,8 +22,6 @@ export async function loginApi({
   return res.json();
 }
 
-
-
 export async function getGate(gateId: string) {
   const res = await fetch(`${BASE_URL}/master/gates`);
   if (!res.ok) throw new Error("Failed to fetch gates");
@@ -53,16 +51,24 @@ export async function getSubscription(subscriptionId: string) {
   return res.json();
 }
 
-export async function checkinSubscriber(gateId: string, zoneId: string, subscriptionId: string) {
+export async function checkinSubscriber(
+  gateId: string,
+  zoneId: string,
+  subscriptionId: string
+) {
   const res = await fetch(`${BASE_URL}/tickets/checkin`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ gateId, zoneId, type: "subscriber", subscriptionId }),
+    body: JSON.stringify({
+      gateId,
+      zoneId,
+      type: "subscriber",
+      subscriptionId,
+    }),
   });
   if (!res.ok) throw await res.json();
   return res.json();
 }
-
 
 export async function getEmployees() {
   const token = Cookies.get("token");
@@ -73,7 +79,11 @@ export async function getEmployees() {
   return res.json();
 }
 
-export async function createEmployee(data: { username: string; password: string; role: string }) {
+export async function createEmployee(data: {
+  username: string;
+  password: string;
+  role: string;
+}) {
   const token = Cookies.get("token");
   const res = await fetch(`${BASE_URL}/admin/users`, {
     method: "POST",
@@ -95,7 +105,17 @@ export async function getParkingState(token: string) {
   return res.json();
 }
 
-export async function setZoneOpen(zoneId: string, open: boolean, token: string) {
+export async function getCategories() {
+  const res = await fetch(`${BASE_URL}/master/categories`);
+  if (!res.ok) throw new Error("Failed to fetch categories");
+  return res.json();
+}
+
+export async function setZoneOpen(
+  zoneId: string,
+  open: boolean,
+  token: string
+) {
   const res = await fetch(`${BASE_URL}/admin/zones/${zoneId}/open`, {
     method: "PUT",
     headers: {
@@ -108,7 +128,11 @@ export async function setZoneOpen(zoneId: string, open: boolean, token: string) 
   return res.json();
 }
 
-export async function updateCategoryRates(categoryId: string, rates: { rateNormal: number; rateSpecial: number }, token: string) {
+export async function updateCategoryRates(
+  categoryId: string,
+  rates: { rateNormal: number; rateSpecial: number },
+  token: string
+) {
   const res = await fetch(`${BASE_URL}/admin/categories/${categoryId}`, {
     method: "PUT",
     headers: {
@@ -121,7 +145,10 @@ export async function updateCategoryRates(categoryId: string, rates: { rateNorma
   return res.json();
 }
 
-export async function addRushHour(data: { weekDay: number; from: string; to: string }, token: string) {
+export async function addRushHour(
+  data: { weekDay: number; from: string; to: string },
+  token: string
+) {
   const res = await fetch(`${BASE_URL}/admin/rush-hours`, {
     method: "POST",
     headers: {
@@ -134,7 +161,10 @@ export async function addRushHour(data: { weekDay: number; from: string; to: str
   return res.json();
 }
 
-export async function addVacation(data: { name: string; from: string; to: string }, token: string) {
+export async function addVacation(
+  data: { name: string; from: string; to: string },
+  token: string
+) {
   const res = await fetch(`${BASE_URL}/admin/vacations`, {
     method: "POST",
     headers: {
@@ -153,7 +183,10 @@ export async function getTicket(ticketId: string) {
   return res.json();
 }
 
-export async function checkoutTicket(ticketId: string, forceConvertToVisitor = false) {
+export async function checkoutTicket(
+  ticketId: string,
+  forceConvertToVisitor = false
+) {
   const res = await fetch(`${BASE_URL}/tickets/checkout`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
