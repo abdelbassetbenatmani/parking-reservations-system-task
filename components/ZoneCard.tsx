@@ -1,7 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zone } from "@/store/store";
 import { motion } from "framer-motion";
 import {
   Car,
@@ -12,9 +11,10 @@ import {
   CheckCircle,
   Star,
 } from "lucide-react";
+import { IZone } from "@/services/types";
 
 type Props = {
-  zone: Zone;
+  zone: IZone;
   selected: boolean;
   disabled: boolean;
   onSelect: () => void;
@@ -61,7 +61,7 @@ const ZoneCard = ({ zone, selected, disabled, onSelect }: Props) => {
                 >
                   <Badge
                     variant="destructive"
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 ml-2 pl-2"
                   >
                     <Lock className="w-3 h-3" />
                     Closed
@@ -74,7 +74,7 @@ const ZoneCard = ({ zone, selected, disabled, onSelect }: Props) => {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <Badge variant="warning" className="flex items-center gap-1">
+                  <Badge variant="warning" className="flex items-center gap-1 ml-2">
                     <Zap className="w-3 h-3" />
                     Special Rate
                   </Badge>
@@ -97,7 +97,7 @@ const ZoneCard = ({ zone, selected, disabled, onSelect }: Props) => {
               )}
             </div>
           </CardTitle>
-          <div className="text-sm text-gray-500 flex items-center gap-1">
+          <div className="text-sm text-gray-500 flex items-center gap-1 ml-2">
             <span>{zone.categoryName || zone.categoryId}</span>
           </div>
         </CardHeader>
