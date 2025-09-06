@@ -1,20 +1,6 @@
+import { IZone } from "@/services/types";
 import { create } from "zustand";
 
-export type Zone = {
-  id: string;
-  name: string;
-  categoryId: string;
-  categoryName?: string;
-  occupied: number;
-  free: number;
-  reserved: number;
-  availableForVisitors: number;
-  availableForSubscribers: number;
-  rateNormal: number;
-  rateSpecial: number;
-  open: boolean;
-  specialActive?: boolean;
-};
 
 export type Gate = {
   id: string;
@@ -32,16 +18,16 @@ export type Ticket = {
 
 type StoreState = {
   gate: Gate | null;
-  zones: Zone[];
+  zones: IZone[];
   connectionStatus: "connected" | "disconnected" | "connecting";
   ticket: Ticket | null;
   ticketModalOpen: boolean;
   setGate: (gate: Gate) => void;
-  setZones: (zones: Zone[]) => void;
+  setZones: (zones: IZone[]) => void;
   setConnectionStatus: (status: StoreState["connectionStatus"]) => void;
   openTicketModal: (ticket: Ticket) => void;
   closeTicketModal: () => void;
-  updateZone: (zone: Zone) => void;
+  updateZone: (zone: IZone) => void;
 };
 
 export const useGateStore = create<StoreState>((set) => ({

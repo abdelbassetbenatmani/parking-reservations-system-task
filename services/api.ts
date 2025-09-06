@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { ICategory, IGate, IZone } from "./types";
 
 const BASE_URL = "http://localhost:3000/api/v1";
 
@@ -22,14 +23,14 @@ export async function loginApi({
   return res.json();
 }
 
-export async function getGate(gateId: string) {
+export async function getGate(gateId: string): Promise<IGate> {
   const res = await fetch(`${BASE_URL}/master/gates`);
   if (!res.ok) throw new Error("Failed to fetch gates");
   const gates = await res.json();
   return gates.find((g: any) => g.id === gateId);
 }
 
-export async function getZones(gateId: string) {
+export async function getZones(gateId: string): Promise<IZone[]> {
   const res = await fetch(`${BASE_URL}/master/zones?gateId=${gateId}`);
   if (!res.ok) throw new Error("Failed to fetch zones");
   return res.json();
@@ -105,7 +106,7 @@ export async function getParkingState(token: string) {
   return res.json();
 }
 
-export async function getCategories() {
+export async function getCategories(): Promise<ICategory[]> {
   const res = await fetch(`${BASE_URL}/master/categories`);
   if (!res.ok) throw new Error("Failed to fetch categories");
   return res.json();
