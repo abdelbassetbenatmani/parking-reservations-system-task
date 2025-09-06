@@ -23,6 +23,12 @@ export async function loginApi({
   return res.json();
 }
 
+export async function getGates(): Promise<IGate[]> {
+  const res = await fetch(`${BASE_URL}/master/gates`);
+  if (!res.ok) throw new Error("Failed to fetch gates");
+  return res.json();
+}
+
 export async function getGate(gateId: string): Promise<IGate> {
   const res = await fetch(`${BASE_URL}/master/gates`);
   if (!res.ok) throw new Error("Failed to fetch gates");
