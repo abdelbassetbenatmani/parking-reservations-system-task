@@ -75,7 +75,7 @@ const GatePage = () => {
             updateZone(msg.payload);
           }
         };
-      } catch{
+      } catch {
         setConnectionStatus("disconnected");
         reconnectTimer = setTimeout(init, 3000);
       }
@@ -234,7 +234,7 @@ const GatePage = () => {
               >
                 <Button
                   variant={"primary"}
-                  className="w-full h-12 text-lg font-semibold"
+                  className="w-full text-lg font-semibold"
                   disabled={!selectedZone || loading}
                   onClick={handleVisitorCheckin}
                 >
@@ -361,6 +361,7 @@ const GatePage = () => {
                       variant={"primary"}
                       disabled={!selectedZone || loading}
                       onClick={handleSubscriberCheckin}
+                      className="w-full  text-lg font-semibold"
                     >
                       {loading ? (
                         <>
