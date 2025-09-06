@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { ICategory, IGate, IZone } from "./types";
+import { ICategory, IGate, IParkingState, IZone } from "./types";
 
 const BASE_URL = "http://localhost:3000/api/v1";
 
@@ -98,7 +98,7 @@ export async function createEmployee(data: {
   return res.json();
 }
 
-export async function getParkingState(token: string) {
+export async function getParkingState(token: string): Promise<IParkingState[]> {
   const res = await fetch(`${BASE_URL}/admin/reports/parking-state`, {
     headers: { Authorization: `Bearer ${token}` },
   });

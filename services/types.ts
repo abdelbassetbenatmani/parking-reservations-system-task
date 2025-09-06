@@ -28,3 +28,17 @@ export interface ICategory {
   rateNormal: number;
   rateSpecial: number;
 }
+
+
+export interface IParkingState {
+    zoneId: string;
+    name: string;
+    totalSlots: number;
+    occupied: number;
+    free: number;
+    reserved: number;
+    availableForVisitors: number;
+    availableForSubscribers: number;
+    subscriberCount: number;
+    open: boolean;
+}
