@@ -6,6 +6,7 @@ import { checkoutTicket, getTicket, getSubscription } from "@/services/api";
 import SubscriptionCarList from "./SubscriptionCarList";
 import CheckoutBreakdown from "./CheckoutBreakdown";
 import { motion, AnimatePresence } from "framer-motion";
+import Cookies from "js-cookie";
 import {
   QrCode,
   CreditCard,
@@ -17,6 +18,7 @@ import {
   UserMinus,
   Loader2,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type Ticket = {
   id: string;
@@ -45,6 +47,7 @@ type CheckoutResult = {
 };
 
 export default function CheckpointCheckoutPanel() {
+  const router = useRouter();
   const [ticketId, setTicketId] = useState("");
   const [loading, setLoading] = useState(false);
   const [ticket, setTicket] = useState<Ticket | null>(null);
@@ -85,6 +88,11 @@ export default function CheckpointCheckoutPanel() {
     setError("");
   };
 
+  const logoutHandler = () => {
+    Cookies.remove("token");
+    router.push("/login");
+  };
+
   return (
     <motion.div
       className="bg-white rounded-xl shadow-xl p-6 border border-gray-100"
@@ -98,7 +106,10 @@ export default function CheckpointCheckoutPanel() {
         transition={{ delay: 0.1 }}
         className="flex items-center gap-3 mb-6"
       >
-        <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+        <div
+          onClick={logoutHandler}
+          className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg cursor-pointer flex items-center justify-center"
+        >
           <LogOut className="w-5 h-5 text-white" />
         </div>
         <h2 className="text-xl font-bold text-gray-800">Ticket Check-out</h2>
@@ -147,11 +158,7 @@ export default function CheckpointCheckoutPanel() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.2 }}
             >
-              <Button
-                variant="outline"
-                onClick={resetForm}
-                size={"icon"} 
-              >
+              <Button variant="outline" onClick={resetForm} size={"icon"}>
                 <RefreshCw className="w-4 h-4" />
               </Button>
             </motion.div>
