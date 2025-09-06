@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/lib/providers/react-query-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const open_sans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "Parking Reservations System",
   description: "Manage your parking reservations efficiently",
@@ -25,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${open_sans.className} ${open_sans.variable} antialiased`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
