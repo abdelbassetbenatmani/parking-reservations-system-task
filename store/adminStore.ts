@@ -1,25 +1,34 @@
-import { create } from "zustand";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-type AuditLogEntry = {
-  timestamp: string;
+interface AuditLogEntry {
   adminId: string;
   action: string;
   targetType: string;
   targetId: string;
   details?: any;
-};
+  timestamp: string;
+}
 
-type AdminState = {
+interface AdminStore {
   auditLog: AuditLogEntry[];
   addAuditLog: (entry: AuditLogEntry) => void;
   clearAuditLog: () => void;
-};
+}
 
-export const useAdminStore = create<AdminState>((set) => ({
-  auditLog: [],
-  addAuditLog: (entry) =>
-    set((state) => ({
-      auditLog: [entry, ...state.auditLog].slice(0, 20),
-    })),
-  clearAuditLog: () => set({ auditLog: [] }),
-}));
+export const useAdminStore = create<AdminStore>()(
+  persist(
+    (set) => ({
+      auditLog: [],
+      addAuditLog: (entry) =>
+        set((state) => ({
+          auditLog: [...state.auditLog, entry].slice(-50), // Keep last 50 entries
+        })),
+      clearAuditLog: () => set({ auditLog: [] }),
+    }),
+    {
+      name: 'admin-store',
+      partialize: (state) => ({ auditLog: state.auditLog }),
+    }
+  )
+);
