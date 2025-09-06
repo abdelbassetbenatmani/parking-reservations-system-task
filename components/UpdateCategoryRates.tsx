@@ -43,7 +43,7 @@ export default function UpdateCategoryRates() {
       try {
         const data = await getCategories();
         setCategories(data);
-      } catch (err) {
+      } catch {
         setError("Failed to load categories");
       }
     }
