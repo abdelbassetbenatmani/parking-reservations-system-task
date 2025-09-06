@@ -3,22 +3,29 @@ import { useGateStore } from "@/store/store";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { 
   MapPin, 
   Wifi, 
   WifiOff, 
   Clock,
-  Building2
+  Building2,
+  Home
 } from "lucide-react";
 
 const GateHeader = () => {
   const { gate, connectionStatus } = useGateStore();
   const [time, setTime] = useState(new Date());
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleGoHome = () => {
+    router.push('/');
+  };
 
   return (
     <motion.div 
@@ -42,7 +49,19 @@ const GateHeader = () => {
           </div>
         </div>
       </div>
+      
       <div className="flex items-center gap-6">
+        {/* Home Button */}
+        <motion.button
+          onClick={handleGoHome}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-gray-700 hover:text-blue-600 hover:border-blue-300"
+        >
+          <Home className="w-4 h-4" />
+          <span className="font-medium">Home</span>
+        </motion.button>
+
         <motion.div
           animate={{ 
             scale: connectionStatus === "connected" ? 1 : [1, 1.1, 1]
@@ -64,6 +83,7 @@ const GateHeader = () => {
             {connectionStatus === "connected" ? "Online" : "Offline"}
           </Badge>
         </motion.div>
+        
         <div className="flex items-center gap-2 text-lg font-mono text-gray-700">
           <Clock className="w-5 h-5" />
           <motion.span

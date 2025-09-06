@@ -11,7 +11,6 @@ import {
   Clock, 
   Eye,
   Filter,
-  Download
 } from "lucide-react";
 
 interface AuditLogEntry {
